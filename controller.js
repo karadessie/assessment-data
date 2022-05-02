@@ -250,7 +250,7 @@ module.exports = {
 
     deleteCity: (req, res) => {
         sequelize.query(`
-        delete city_id`)
+        delete from cities where name = req.param.value`)
         .then(() => {
             console.log('City deleted!')
             res.sendStatus(200)
