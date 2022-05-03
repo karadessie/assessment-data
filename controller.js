@@ -233,9 +233,13 @@ module.exports = {
     },
 
     createCity: (req, res) => {
+       const newName = req.body.name
+       const newRating = req.body.rating
+       const newCountryID = req.body.country_id
+       console.log(newName, newRating, newCountryID)
        sequelize.query(`
         insert into cities (name, rating, country_id)
-        values ('Rock Hill', 99, 10)`)  
+        values  (newName, newRating, newCountryID`)
         .then(() => {
         console.log('City added!')
         res.sendStatus(200)
@@ -249,11 +253,15 @@ module.exports = {
     },
 
     deleteCity: (req, res) => {
+        const deleteCityID = req.param.id
+        console.log(deleteCityID)
         sequelize.query(`
-        delete from cities where name = req.param.value`)
+        for (let i = 0; i < cities.length; i++) {
+            if  (deleteCityID === cities[i]) {
+            delete from cities`)
         .then(() => {
             console.log('City deleted!')
             res.sendStatus(200)
             }).catch(err => console.log('error deleting city', err))
         }      
-  }
+   }
