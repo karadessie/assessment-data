@@ -18,4 +18,4 @@ app.post('/seed', seed)
 // app.get('/cities', getCities)
 // app.delete('/cities/:id', deleteCity)
 
-app.listen(SERVER_PORT, () => console.log(`up on 4004`))
+app.listen(process.env.SERVER_PORT, () => console.log(`up on 4004`))

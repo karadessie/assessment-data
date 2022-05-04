@@ -1,7 +1,8 @@
+require('dotenv').config()
 const Sequelize = require('sequelize')
-const { INSERT } = require('sequelize/types/query-types')
+//
 
-const sequelize = new Sequelize(CONNECTION_STRING, {
+const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres', 
     dialectOptions: {
         ssl: {
@@ -238,11 +239,11 @@ module.exports = {
        const newCountryID = req.body.country_id
        console.log(newName, newRating, newCountryID)
        sequelize.query(`
-        insert into cities (name, rating, country_id)
-        values  (newName, newRating, newCountryID`)
-        .then(() => {
-        console.log('City added!')
-        res.sendStatus(200)
+         insert into cities (name, rating, country_id)
+         values  (${newName}, ${newRating}, ${newCountryID}`)
+       .then(() => {
+         console.log('City added!')
+         res.sendStatus(200)
     }).catch(err => console.log('error adding city', err))
     },
 
@@ -253,15 +254,13 @@ module.exports = {
     },
 
     deleteCity: (req, res) => {
-        const deleteCityID = req.param.id
+        const deleteCityID = req.params.id
         console.log(deleteCityID)
         sequelize.query(`
-        for (let i = 0; i < cities.length; i++) {
-            if  (deleteCityID === cities[i]) {
-            delete from cities`)
+          delete from cities where city_id = ${deleteCityID}`)
         .then(() => {
             console.log('City deleted!')
             res.sendStatus(200)
             }).catch(err => console.log('error deleting city', err))
         }      
-   }
+      }
